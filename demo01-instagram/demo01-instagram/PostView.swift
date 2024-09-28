@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct PostView: View {
+    @State private var likeCount = 456920
+    @State private var isLiked = false
+    @State private var isBookmarked = false
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -27,14 +30,34 @@ struct PostView: View {
                 .resizable()
                 .scaledToFit()
             HStack(spacing: 16) {
-                Image(systemName: "heart")
+                Button {
+                    if isLiked {
+                        likeCount -= 1
+                        isLiked = false
+                    } else {
+                        likeCount += 1
+                        isLiked = true
+                    }
+                } label: {
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .foregroundStyle(isLiked ? .red : .black)
+                }
                 Image(systemName: "message")
                 Image(systemName: "paperplane")
                 Spacer()
-                Image(systemName: "bookmark")
+                Button {
+                    if isBookmarked {
+                        isBookmarked = false
+                    } else {
+                        isBookmarked = true
+                    }
+                } label: {
+                    Image(systemName: isBookmarked ? "bookmark.fill" : "bookmark")
+                        .foregroundStyle(isBookmarked ? .yellow : .black)
+                }
             }
             .font(.title2)
-            Text("456,920 likes")
+            Text("\(likeCount) likes")
                 .font(.footnote)
                 .fontWeight(.semibold)
             Text("**LebronLuvr23** So thrilled to watch my glorious pookie bear king LeBeast ball out last night! I couldn't stop dreaming about him 😫😫")
